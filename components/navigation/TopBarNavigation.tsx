@@ -1,7 +1,7 @@
 import React from "react";
 
 type TopBarNavigationProps = {
-  title?: String;
+  title?: string;
   icon?: React.ReactNode;
   customClass?: string;
 };

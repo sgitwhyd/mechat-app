@@ -5,10 +5,15 @@ import Layout from "@/components/layout";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
+type chat = {
+  user_id: number;
+  message: string;
+};
+
 const Chats = () => {
   const router = useRouter();
   const user_id = 1;
-  const [chats, setChats] = useState<{}[]>([]);
+  const [chats, setChats] = useState<chat[]>([]);
   const [chat, setChat] = useState<string>("");
 
   const onChatInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
