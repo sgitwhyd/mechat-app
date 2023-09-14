@@ -20,7 +20,7 @@ const SignIn: NextPage = () => {
         <p className="text-lg leading-[18px mt-[25px]">
           Korem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
-        <form action="" className="mt-[62px]">
+        <form className="mt-[62px]">
           <div className="mb-[26px]">
             <label htmlFor="email" className="text-brand-xl leading-brand-xl">
               Email
@@ -51,8 +51,8 @@ const SignIn: NextPage = () => {
                 <Image
                   src={
                     isPasswordOpen
-                      ? "/assets/icons/eye.svg"
-                      : "/assets/icons/eye-slash.svg"
+                      ? "/assets/icons/eye-slash.svg"
+                      : "/assets/icons/eye.svg"
                   }
                   alt="eye slash"
                   width={24}
