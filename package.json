@@ -38,6 +38,7 @@
     "vercel": "^30.2.2"
   },
   "lint-staged": {
-    "*": "prettier --write --ignore-unknown"
+    "*": "prettier --write --ignore-unknown",
+    "pre-commit": "yarn format:check"
   }
 }
