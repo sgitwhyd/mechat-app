@@ -43,6 +43,6 @@
     }
   },
   "lint-staged": {
-    "*": "yarn run format"
+    "*": "prettier --write --ignore-unknown"
   }
 }
