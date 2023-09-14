@@ -2,8 +2,12 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Layout from "@/components/layout";
 import Link from "next/link";
+import { useState } from "react";
+import Image from "next/image";
 
 const SignUp: NextPage = () => {
+  const [isPasswordOpen, setIsPasswordOpen] = useState(false);
+
   return (
     <Layout withTopBar title="Create New Account">
       <Head>
@@ -41,11 +45,25 @@ const SignUp: NextPage = () => {
             </label>
             <div className="relative flex items-center">
               <input
-                type="password"
+                type={isPasswordOpen ? "text" : "password"}
                 placeholder="Enter Your Password"
                 className="w-full rounded-[10px] mt-2 py-[21px] pl-[27px] bg-brand-gray-400 border border-brand-gray-500 focus:outline-none"
               />
-              <div className="absolute right-5">eye</div>
+              <div
+                className="absolute right-5 pt-2 cursor-pointer"
+                onClick={() => setIsPasswordOpen(!isPasswordOpen)}
+              >
+                <Image
+                  src={
+                    isPasswordOpen
+                      ? "/assets/icons/eye-slash.svg"
+                      : "/assets/icons/eye.svg"
+                  }
+                  alt="eye slash"
+                  width={24}
+                  height={24}
+                />
+              </div>
             </div>
           </div>
           <button
