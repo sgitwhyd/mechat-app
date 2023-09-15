@@ -14,16 +14,21 @@
     "deploy:vercel": "vercel"
   },
   "dependencies": {
+    "@next/font": "^13.4.19",
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
+    "axios": "^1.5.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "formik": "^2.0.0",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "5.2.2"
+    "socket.io-client": "^4.7.2",
+    "typescript": "5.2.2",
+    "universal-cookie": "^6.1.1",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@tanstack/react-query": "^4.0.0",
