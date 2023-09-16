@@ -4,11 +4,15 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Layout from "@/components/layout";
 import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
+import { Formik, Form } from "formik";
+import { signInValidationSchema } from "@/validator/auth";
+import Input from "@/components/ui/input";
 
 const SignIn: NextPage = () => {
-  const [isPasswordOpen, setIsPasswordOpen] = useState(false);
+  const handleSubmit = (values: { email: string; password: string }) => {
+    console.log(values);
+  };
+
   return (
     <Layout withTopBar title="Welcome">
       <Head>
@@ -20,55 +24,39 @@ const SignIn: NextPage = () => {
         <p className="text-lg leading-[18px mt-[25px]">
           Korem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
-        <form className="mt-[62px]">
-          <div className="mb-[26px]">
-            <label htmlFor="email" className="text-brand-xl leading-brand-xl">
-              Email
-            </label>
-            <input
-              type="email"
-              placeholder="Enter Your Email"
-              className="w-full rounded-[10px] mt-2 py-[21px] pl-[27px] bg-brand-gray-400 border border-brand-gray-500 focus:outline-none"
-            />
-          </div>
-          <div className="mb-[26px]">
-            <label
-              htmlFor="password"
-              className="text-brand-xl leading-brand-xl"
-            >
-              Password
-            </label>
-            <div className="relative flex items-center">
-              <input
-                type={isPasswordOpen ? "text" : "password"}
-                placeholder="Enter Your Password"
-                className="w-full rounded-[10px] mt-2 py-[21px] pl-[27px] bg-brand-gray-400 border border-brand-gray-500 focus:outline-none"
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          validationSchema={signInValidationSchema}
+          onSubmit={(values) => handleSubmit(values)}
+        >
+          {({ errors }) => (
+            <Form className="mt-[62px]">
+              <Input
+                label="Email"
+                type="email"
+                error={errors.email}
+                placeholder="Enter Your Email"
               />
-              <div
-                className="absolute right-5 pt-2 cursor-pointer"
-                onClick={() => setIsPasswordOpen(!isPasswordOpen)}
-              >
-                <Image
-                  src={
-                    isPasswordOpen
-                      ? "/assets/icons/eye-slash.svg"
-                      : "/assets/icons/eye.svg"
-                  }
-                  alt="eye slash"
-                  width={24}
-                  height={24}
-                />
-              </div>
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="bg-brand-blue-500 rounded-[10px] w-full py-[19px] text-brand-xl leading-brand-xl font-bold text-white
+              <Input
+                type="password"
+                error={errors.password}
+                label="Password"
+                placeholder="Enter Your Password"
+                isPasswordInput
+              />
+              <button
+                type="submit"
+                className="bg-brand-blue-500 rounded-[10px] w-full py-[19px] text-brand-xl leading-brand-xl font-bold text-white
           "
-          >
-            Sign In
-          </button>
-        </form>
+              >
+                Sign In
+              </button>
+            </Form>
+          )}
+        </Formik>
         <p className="text-brand-blue-500 text-base font-semibold text-center mt-3">
           Don&apos;t have account ?{" "}
           <Link href="/sign-up" className="font-bold">
