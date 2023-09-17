@@ -11,9 +11,20 @@ import socket from "@/config/socket/socket";
 import { IRoom } from "@/types/auth-store";
 
 const Index: NextPage = () => {
+  const { state } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [rooms, setRooms] = useState<IRoom[]>([]);
-  const { state } = useContext(AuthContext);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const filteredRooms = () => {
+    if (searchQuery) {
+      return rooms.filter((room) =>
+        room.name.toLowerCase().includes(searchQuery)
+      );
+    } else {
+      return rooms;
+    }
+  };
 
   useEffect(() => {
     socket.on("room", (room: IRoom) => {
@@ -62,6 +73,7 @@ const Index: NextPage = () => {
               className="ml-6"
             />
             <input
+              onChange={(e) => setSearchQuery(e.target.value)}
               type="text"
               placeholder="Search Room..."
               className="bg-transparent focus:outline-none ml-5 text-xl leading-5 "
@@ -71,8 +83,10 @@ const Index: NextPage = () => {
         <div className="space-y-5">
           {isLoading ? (
             <div>Loading</div>
+          ) : filteredRooms().length === 0 ? (
+            <div className="text-center text-2xl">{searchQuery} not found</div>
           ) : (
-            rooms?.map((room, index) => (
+            filteredRooms().map((room, index) => (
               <div
                 key={index}
                 className="bg-brand-gray-400 rounded-[10px] h-fit flex items-center relative"
