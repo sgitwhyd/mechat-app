@@ -10,6 +10,7 @@ import RoomCard from "@/components/room-card";
 import { AuthContext } from "@/store/context/AuthContext";
 import socket from "@/config/socket/socket";
 import { IRoom } from "@/types/auth-store";
+import { signOut } from "@/services/auth.service";
 
 const Index: NextPage = () => {
   const { state } = useContext(AuthContext);
@@ -26,6 +27,8 @@ const Index: NextPage = () => {
       return rooms;
     }
   };
+
+  const handleSignOut = () => signOut();
 
   const handleJoinRoom = () => {};
 
@@ -48,15 +51,25 @@ const Index: NextPage = () => {
       withTopBar
       topBarElement={
         <div className="flex items-center w-full px-6">
-          <div className="flex items-center gap-5">
-            <Image
-              src={`https://ui-avatars.com/api/?name=${state.user?.name}&background=random`}
-              alt={`showing ${state.user?.name} avatar image`}
-              width={48}
-              height={48}
-              className="w-12 h-12 rounded-full object-cover"
-            />
-            <p className="text-brand-xl leading-brand-xl">{state.user?.name}</p>
+          <div className="flex justify-between w-full items-center">
+            <div className="flex items-center  gap-5">
+              <Image
+                src={`https://ui-avatars.com/api/?name=${state.user?.name}&background=random`}
+                alt={`showing ${state.user?.name} avatar image`}
+                width={48}
+                height={48}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+              <p className="text-brand-xl leading-brand-xl">
+                {state.user?.name}
+              </p>
+            </div>
+            <button
+              className="p-2 rounded-md hover:bg-opacity-25 block hover:bg-brand-blue-500"
+              onClick={handleSignOut}
+            >
+              Logout
+            </button>
           </div>
         </div>
       }

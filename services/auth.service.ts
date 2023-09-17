@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@/utils/api";
-import { putToCookie } from "@/utils";
+import { putToCookie, removeCookie } from "@/utils";
 
 export const getUser = async () => {
   return api.get("/auth/profile");
@@ -53,4 +53,12 @@ export const signUp = async (values: {
       message: data.message,
     };
   }
+};
+
+export const signOut = () => {
+  removeCookie("access_token");
+  window.location.reload();
+  return {
+    message: "Logout Success",
+  };
 };
