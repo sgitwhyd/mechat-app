@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         onError: (err) => {
           console.log(err);
         },
-        refetchOnMount: true,
+        refetchOnMount: false,
       }
     );
   }
