@@ -29,7 +29,7 @@ export const AuthContext = createContext<IAuthContext>({
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, dispatch] = useReducer(authReducer, initalState);
-  const token = !!getCookies("token");
+  const token = !!getCookies("access_token");
 
   if (token) {
     const { data } = useQuery(

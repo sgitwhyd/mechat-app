@@ -2,15 +2,34 @@
 
 import { NextPage } from "next";
 import Head from "next/head";
-import Layout from "@/components/layout";
 import Link from "next/link";
 import { Formik, Form } from "formik";
+import { useRouter } from "next/router";
+import { useEffect, useContext } from "react";
+
+import { AuthContext } from "@/store/context/AuthContext";
+import Layout from "@/components/layout";
 import { signInValidationSchema } from "@/validator/auth";
 import Input from "@/components/ui/input";
+import { signIn } from "@/services/auth.service";
 
 const SignIn: NextPage = () => {
-  const handleSubmit = (values: { email: string; password: string }) => {
-    console.log(values);
+  const router = useRouter();
+  const { state } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (state.isAuthenticated) {
+      router.push("/");
+    }
+  }, [router, state.isAuthenticated]);
+
+  const handleSubmit = async (values: { email: string; password: string }) => {
+    return signIn(values).then(({ error, message }) => {
+      if (!error) {
+        alert(message);
+        router.reload();
+      }
+    });
   };
 
   return (

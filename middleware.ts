@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  const isLogged = request.cookies.has("token");
+  const isLogged = request.cookies.has("access_token");
 
   if (!isLogged) {
     return NextResponse.redirect(new URL("/sign-in", request.url));

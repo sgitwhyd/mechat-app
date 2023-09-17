@@ -10,4 +10,6 @@ export const api = axios.create({
   },
 });
 
-api.defaults.headers.common["Authorization"] = `Bearer ${getCookies("token")}`;
+api.defaults.headers.common["Authorization"] = `Bearer ${getCookies(
+  "access_token"
+)}`;
