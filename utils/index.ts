@@ -3,15 +3,19 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
-export const putToCookie = (key: string, value: any) => {
-  const expirationDate = new Date();
-  expirationDate.setDate(expirationDate.getDate() + 1);
+const expirationDate = new Date();
+expirationDate.setDate(expirationDate.getDate() + 1);
+const cookiesOptions = {
+  path: "/",
+  expires: expirationDate,
+};
 
-  const options = {
-    path: "/",
-    expires: expirationDate,
-  };
-  cookies.set(key, value, options);
+export const putToCookie = (key: string, value: any) => {
+  cookies.set(key, value, cookiesOptions);
+};
+
+export const removeCookie = (key: string) => {
+  return cookies.remove(key, cookiesOptions);
 };
 
 export const getCookies = (key: string) => {
