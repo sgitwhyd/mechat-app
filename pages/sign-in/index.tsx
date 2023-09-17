@@ -5,17 +5,19 @@ import Head from "next/head";
 import Link from "next/link";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 
 import { AuthContext } from "@/store/context/AuthContext";
 import Layout from "@/components/layout";
 import { signInValidationSchema } from "@/validator/auth";
 import Input from "@/components/ui/input";
 import { signIn } from "@/services/auth.service";
+import { AuthSignInProps } from "@/types/auth-store";
 
 const SignIn: NextPage = () => {
   const router = useRouter();
   const { state } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (state.isAuthenticated) {
@@ -23,13 +25,19 @@ const SignIn: NextPage = () => {
     }
   }, [router, state.isAuthenticated]);
 
-  const handleSubmit = async (values: { email: string; password: string }) => {
-    return signIn(values).then(({ error, message }) => {
+  const handleSubmit = async (values: AuthSignInProps) => {
+    try {
+      setIsLoading(true);
+      const { message, error } = await signIn(values);
+
+      alert(message);
+
       if (!error) {
-        alert(message);
         router.reload();
       }
-    });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -49,7 +57,10 @@ const SignIn: NextPage = () => {
             password: "",
           }}
           validationSchema={signInValidationSchema}
-          onSubmit={(values) => handleSubmit(values)}
+          onSubmit={async (values, { resetForm }) => {
+            await handleSubmit(values);
+            resetForm();
+          }}
         >
           {({ errors }) => (
             <Form className="mt-[62px]">
@@ -67,9 +78,11 @@ const SignIn: NextPage = () => {
                 isPasswordInput
               />
               <button
+                disabled={isLoading}
                 type="submit"
-                className="bg-brand-blue-500 rounded-[10px] w-full py-[19px] text-brand-xl leading-brand-xl font-bold text-white
-          "
+                className={`bg-brand-blue-500 disabled:opacity-50 rounded-[10px] w-full py-[19px] text-brand-xl leading-brand-xl font-bold text-white ${
+                  isLoading ? "cursor-not-allowed" : ""
+                }`}
               >
                 Sign In
               </button>
