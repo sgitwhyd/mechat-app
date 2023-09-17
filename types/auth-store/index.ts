@@ -23,3 +23,14 @@ export interface IRoom {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type AuthSignUpProps = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type AuthSignInProps = {
+  email: string;
+  password: string;
+};

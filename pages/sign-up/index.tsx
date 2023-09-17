@@ -1,12 +1,37 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import Layout from "@/components/layout";
 import Link from "next/link";
 import { Formik, Form } from "formik";
-import { signUpValidationSchema } from "@/validator/auth";
+import { useRouter } from "next/router";
+import { useEffect, useContext, useState } from "react";
+
+import { AuthContext } from "@/store/context/AuthContext";
+import Layout from "@/components/layout";
 import Input from "@/components/ui/input";
+import { signUpValidationSchema } from "@/validator/auth";
+import { AuthSignUpProps } from "@/types/auth-store";
+import { signUp } from "@/services/auth.service";
 
 const SignUp: NextPage = () => {
+  const router = useRouter();
+  const { state } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (state.isAuthenticated) {
+      router.push("/");
+    }
+  }, [router, state.isAuthenticated]);
+
+  const handleSignUp = async (values: AuthSignUpProps) => {
+    try {
+      const { message } = await signUp(values);
+      alert(message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Layout withTopBar title="Create New Account">
       <Head>
@@ -21,7 +46,10 @@ const SignUp: NextPage = () => {
             password: "",
           }}
           validationSchema={signUpValidationSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={async (values, { resetForm }) => {
+            await handleSignUp(values);
+            resetForm();
+          }}
         >
           {({ errors }) => (
             <Form>
@@ -45,9 +73,11 @@ const SignUp: NextPage = () => {
                 isPasswordInput
               />
               <button
+                disabled={isLoading}
                 type="submit"
-                className="bg-brand-blue-500 rounded-[10px] w-full py-[19px] text-brand-xl leading-brand-xl font-bold text-white
-          "
+                className={`bg-brand-blue-500 disabled:opacity-50 rounded-[10px] w-full py-[19px] text-brand-xl leading-brand-xl font-bold text-white ${
+                  isLoading ? "cursor-not-allowed" : ""
+                }`}
               >
                 Sign In
               </button>
