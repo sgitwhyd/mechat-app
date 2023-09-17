@@ -2,11 +2,12 @@
 
 import { NextPage } from "next";
 import Head from "next/head";
-import Layout from "@/components/layout";
 import Image from "next/image";
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
+
+import Layout from "@/components/layout";
+import RoomCard from "@/components/room-card";
 import { AuthContext } from "@/store/context/AuthContext";
-import { useState, useEffect } from "react";
 import socket from "@/config/socket/socket";
 import { IRoom } from "@/types/auth-store";
 
@@ -25,6 +26,8 @@ const Index: NextPage = () => {
       return rooms;
     }
   };
+
+  const handleJoinRoom = () => {};
 
   useEffect(() => {
     socket.on("room", (room: IRoom) => {
@@ -87,31 +90,7 @@ const Index: NextPage = () => {
             <div className="text-center text-2xl">{searchQuery} not found</div>
           ) : (
             filteredRooms().map((room, index) => (
-              <div
-                key={index}
-                className="bg-brand-gray-400 rounded-[10px] h-fit flex items-center relative"
-              >
-                <Image
-                  src="/assets/icons/room.png"
-                  alt="room illustration"
-                  width={200}
-                  height={200}
-                />
-                <div className="flex flex-col gap-5">
-                  <h1 className="text-brand-xl leading-brand-xl">
-                    {room.name}
-                  </h1>
-                  <p className="text-base leading-4">
-                    Code <br /> {room._id}
-                  </p>
-                  <button
-                    className="bg-brand-blue-500 rounded-full text-base leading-4 py-[6px] max-w-[80px] text-white"
-                    onClick={() => {}}
-                  >
-                    Join
-                  </button>
-                </div>
-              </div>
+              <RoomCard key={index} room={room} handleJoin={handleJoinRoom} />
             ))
           )}
         </div>
