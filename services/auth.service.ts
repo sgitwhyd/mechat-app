@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@/utils/api";
 import { putToCookie, removeCookie } from "@/utils";
+import socket from "@/config/socket/socket";
 
 export const getUser = async () => {
   return api.get("/auth/profile");
@@ -56,6 +57,8 @@ export const signUp = async (values: {
 };
 
 export const signOut = () => {
+  socket.emit("leave-room");
+  socket.off();
   removeCookie("access_token");
   window.location.reload();
   return {
