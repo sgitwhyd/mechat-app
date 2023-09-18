@@ -1,8 +1,7 @@
 import axios from "axios";
 import { getCookies } from ".";
 
-const BASE_URL = "http://localhost:5000/api/v1";
-
+const BASE_URL = process.env.NEXT_API_BE_BASE_URL;
 export const api = axios.create({
   baseURL: BASE_URL,
   headers: {

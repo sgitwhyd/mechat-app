@@ -1,5 +1,7 @@
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socketUrl = process.env.NEXT_APP_SOCKET_URL as string;
+
+const socket = io(socketUrl);
 
 export default socket;
