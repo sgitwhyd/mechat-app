@@ -5,7 +5,7 @@ import Image from "next/image";
 type InputProps = {
   label?: string;
   type: string;
-  error: string | undefined;
+  error?: string | undefined;
   placeholder: string;
   isPasswordInput?: boolean;
 };
@@ -19,16 +19,21 @@ const Input = ({
 }: InputProps) => {
   const [isPasswordOpen, setIsPasswordOpen] = useState(false);
 
+  const sanitizeLabel = label?.toLocaleLowerCase().split(" ").join("_");
+
   return (
     <div className="mb-[26px]">
-      <label htmlFor={label} className="text-brand-xl leading-brand-xl ">
+      <label
+        htmlFor={sanitizeLabel}
+        className="text-brand-xl leading-brand-xl "
+      >
         {label}
       </label>
 
       {isPasswordInput ? (
         <div className="relative flex items-center">
           <Field
-            name={label?.toLocaleLowerCase()}
+            name={sanitizeLabel}
             type={isPasswordOpen ? "text" : "password"}
             placeholder="Enter Your Password"
             className="w-full rounded-[10px] mt-2 py-[21px] pl-[27px] bg-brand-gray-400 border border-brand-gray-500 focus:outline-none"
@@ -51,7 +56,7 @@ const Input = ({
         </div>
       ) : (
         <Field
-          name={label?.toLocaleLowerCase()}
+          name={sanitizeLabel}
           type={type}
           placeholder={placeholder}
           className="w-full rounded-[10px] mt-2 py-[21px] pl-[27px] bg-brand-gray-400 border border-brand-gray-500 focus:outline-none"
