@@ -35,6 +35,8 @@ const SignIn: NextPage = () => {
       if (!error) {
         router.reload();
       }
+    } catch (error) {
+      alert("error connection");
     } finally {
       setIsLoading(false);
     }
