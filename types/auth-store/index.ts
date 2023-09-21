@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-interface IUser {
+export interface IUser {
   name: string;
   user_id: string;
 }
@@ -7,7 +7,6 @@ interface IUser {
 export interface IAuthState {
   isAuthenticated: boolean;
   user: IUser | null;
-  room: IRoom | null;
 }
 
 export interface IAuthContext {

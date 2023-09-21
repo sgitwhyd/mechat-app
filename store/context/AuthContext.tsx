@@ -15,14 +15,12 @@ type AuthProviderProps = {
 const initalState: IAuthState = {
   isAuthenticated: false,
   user: null,
-  room: null,
 };
 
 export const AuthContext = createContext<IAuthContext>({
   state: {
     isAuthenticated: false,
     user: null,
-    room: null,
   },
   dispatch: () => {},
 });
