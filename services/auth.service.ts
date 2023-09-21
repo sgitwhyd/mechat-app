@@ -56,9 +56,9 @@ export const signUp = async (values: {
   }
 };
 
-export const signOut = () => {
-  socket.emit("leave-room");
+export const signOut = (user: any) => {
   socket.off();
+  socket.emit("disconnected", user.user_id);
   removeCookie("access_token");
   window.location.reload();
   return {
