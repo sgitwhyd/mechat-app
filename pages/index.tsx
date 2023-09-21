@@ -34,13 +34,20 @@ const Index: NextPage = () => {
     }
   };
 
-  const handleSignOut = () => signOut();
+  const handleSignOut = () => signOut(state.user);
 
   const handleJoinRoom = (room_id: string) => {
     Router.push(`/chats/${room_id}`);
     socket.emit("join", {
       user_id: state.user?.user_id,
       room_id: room_id,
+    });
+  };
+
+  const handleCreateRoom = (name: string) => {
+    socket.emit("store-room", {
+      name,
+      user_id: state.user?.user_id,
     });
   };
 
@@ -159,7 +166,11 @@ const Index: NextPage = () => {
                       .min(5)
                       .required("Room name is required"),
                   })}
-                  onSubmit={({ room_name }) => console.log(room_name)}
+                  onSubmit={({ room_name }, { resetForm }) => {
+                    handleCreateRoom(room_name);
+                    resetForm();
+                    setIsAddRoom(false);
+                  }}
                 >
                   {({ errors }) => (
                     <Form>
