@@ -13,7 +13,18 @@ const averiaSans = Averia_Sans_Libre({
 });
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const [queryClient] = React.useState(() => new QueryClient());
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            useErrorBoundary: true,
+            refetchOnWindowFocus: false,
+            retry: false,
+          },
+        },
+      })
+  );
   return (
     <>
       <QueryClientProvider client={queryClient}>
