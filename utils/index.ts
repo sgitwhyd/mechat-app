@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Cookies from "universal-cookie";
+import moment from "moment";
 
 const cookies = new Cookies();
 
@@ -27,3 +28,5 @@ export const putToLocalStorage = (key: string, value: string) => {
     localStorage.setItem(key, JSON.stringify(value));
   }
 };
+
+export const formatDate = (date: string) => moment(date).format("llll");
