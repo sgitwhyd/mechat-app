@@ -10,8 +10,7 @@ import { AuthContext } from "@/store/context/AuthContext";
 import socket from "@/config/socket/socket";
 import { messageProps, IRoom } from "@/types/chat";
 import { getRoomDetail } from "@/services/room.service";
-import ChatBox from "@/feature/chat/chat-box";
-import SendMessage from "@/feature/chat/send-message";
+import { ChatBox, SendMessage } from "@/features/chat";
 
 const Chats = () => {
   const router = useRouter();
@@ -54,7 +53,7 @@ const Chats = () => {
         room_id: room_id,
       });
     }
-  }, [room_id, state.user?.user_id]);
+  }, [room_id, state.user?.user_id, user_id]);
 
   useEffect(() => {
     socket.on("chat", (chat: messageProps) => {
@@ -85,9 +84,12 @@ const Chats = () => {
           <p className="text-xs text-green-500">{`${userInRoom} Online`}</p>
         </div>
       }
-      customClass="fixed top-0 bg-white z-10"
+      customClass="fixed top-0 bg-white z-10 shadow-md"
       icon={
-        <button onClick={handleBack}>
+        <button
+          onClick={handleBack}
+          className="bg-brand-gray-400 py-3 px-4 rounded-full"
+        >
           <Image
             src="/assets/icons/arrow-left.svg"
             alt="arrow left icon"
@@ -104,8 +106,8 @@ const Chats = () => {
       <div className="flex-1 w-full relative px-[27px]">
         <div className=" pb-28 space-y-5 mt-20 overflow-y-auto" ref={bottomRef}>
           {chats.length === 0 ? (
-            <div className="text-center text-xl">
-              Nothing Chat here... Let&apos;s chat
+            <div className="text-center text-xl mt-5 items-center flex justify-center">
+              Nothing Chat here... Be first chat in here
             </div>
           ) : (
             chats.map((chat) => (
