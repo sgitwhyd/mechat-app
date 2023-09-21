@@ -1,5 +1,6 @@
 import React from "react";
 import { messageProps } from "@/types/chat";
+import { formatDate } from "@/utils";
 
 type ChatBoxProps = {
   chat: messageProps;
@@ -24,9 +25,9 @@ const ChatBox = ({ isSender, chat }: ChatBoxProps) => {
       <div
         className={`${
           isSender ? "text-end" : ""
-        } mb-2 text-[9px] font-semibold mt-2`}
+        } mb-2 text-[9px] font-semibold mt-1`}
       >
-        {chat.createdAt}
+        {formatDate(chat.createdAt)}
       </div>
     </div>
   );
