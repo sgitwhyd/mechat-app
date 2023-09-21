@@ -3,6 +3,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import Layout from "@/components/layout";
 import { AuthContext } from "@/store/context/AuthContext";
@@ -19,8 +20,15 @@ const Chats = () => {
   const room_id = router.query.room_id;
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  const [userInRoom, setUserInRoom] = useState(0);
   const [room, setRoom] = useState<IRoom>();
   const [chats, setChats] = useState<messageProps[]>([]);
+
+  useEffect(() => {
+    socket.on("joined", (user) => {
+      setUserInRoom(user);
+    });
+  }, [chats]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({
@@ -62,14 +70,21 @@ const Chats = () => {
   }, [room_id]);
 
   const handleBack = () => {
-    socket.emit("leave-room");
+    socket.emit("leave-room", user_id, room_id);
     router.back();
   };
 
   return (
     <Layout
       withTopBar
-      title={room?.name}
+      title={
+        <div className="flex flex-col items-center">
+          <div className="text-brand-xl leading-brand-xl text-brand-blue-500">
+            {room?.name}
+          </div>
+          <p className="text-xs text-green-500">{`${userInRoom} Online`}</p>
+        </div>
+      }
       customClass="fixed top-0 bg-white z-10"
       icon={
         <button onClick={handleBack}>
@@ -82,15 +97,25 @@ const Chats = () => {
         </button>
       }
     >
+      <Head>
+        <title>{room?.name} | Mechat</title>
+        <meta name="description" content={room?.name} />
+      </Head>
       <div className="flex-1 w-full relative px-[27px]">
         <div className=" pb-28 space-y-5 mt-20 overflow-y-auto" ref={bottomRef}>
-          {chats.map((chat) => (
-            <ChatBox
-              key={chat._id}
-              chat={chat}
-              isSender={chat.user_id._id === user_id}
-            />
-          ))}
+          {chats.length === 0 ? (
+            <div className="text-center text-xl">
+              Nothing Chat here... Let&apos;s chat
+            </div>
+          ) : (
+            chats.map((chat) => (
+              <ChatBox
+                key={chat._id}
+                chat={chat}
+                isSender={chat.user_id._id === user_id}
+              />
+            ))
+          )}
         </div>
         <div className="flex w-full">
           <SendMessage room_id={room_id as string} />
