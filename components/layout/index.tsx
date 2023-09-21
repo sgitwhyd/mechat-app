@@ -5,7 +5,7 @@ type LayoutProps = {
   children: ReactNode;
   withTopBar: boolean;
   topBarElement?: ReactNode;
-  title?: string;
+  title?: ReactNode | string;
   icon?: ReactNode;
   customClass?: string;
 };
