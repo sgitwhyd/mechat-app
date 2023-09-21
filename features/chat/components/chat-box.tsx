@@ -7,7 +7,7 @@ type ChatBoxProps = {
   isSender: boolean;
 };
 
-const ChatBox = ({ isSender, chat }: ChatBoxProps) => {
+export const ChatBox = ({ isSender, chat }: ChatBoxProps) => {
   return (
     <div>
       <p className={`${isSender ? "text-end" : ""} mb-2 text-xs font-semibold`}>
@@ -32,5 +32,3 @@ const ChatBox = ({ isSender, chat }: ChatBoxProps) => {
     </div>
   );
 };
-
-export default ChatBox;

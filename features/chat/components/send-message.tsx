@@ -9,7 +9,7 @@ type SendMessageProps = {
   room_id: string;
 };
 
-const SendMessage = ({ room_id }: SendMessageProps) => {
+export const SendMessage = ({ room_id }: SendMessageProps) => {
   const handleSendMessage = (message: string) => {
     socket.emit("store-chat", {
       room_id: room_id as string,
@@ -67,5 +67,3 @@ const SendMessage = ({ room_id }: SendMessageProps) => {
     </Formik>
   );
 };
-
-export default SendMessage;
