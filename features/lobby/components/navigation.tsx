@@ -11,7 +11,7 @@ export const Navigation = () => {
   const handleSignOut = () => signOut(user);
 
   return (
-    <div className="flex items-center w-full px-6 shadow-lg py-3">
+    <div className="flex items-center w-full px-6 py-3">
       <div className="flex justify-between w-full items-center">
         <div className="flex items-center  gap-5">
           <Image

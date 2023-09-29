@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import socket from "@/config/socket/socket";
 import { IRoom } from "@/types/auth-store";
-import { RoomCard } from "@/feature/lobby";
+import { RoomCard } from "@/features/lobby";
 
 type ListRoomProps = {
   searchQuery: string;
