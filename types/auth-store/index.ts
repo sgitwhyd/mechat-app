@@ -7,6 +7,8 @@ export interface IUser {
 export interface IAuthState {
   isAuthenticated: boolean;
   user: IUser | null;
+  room: IRoom | null;
+  isLoading: boolean;
 }
 
 export interface IAuthContext {
@@ -14,11 +16,17 @@ export interface IAuthContext {
   dispatch: React.Dispatch<any>;
 }
 
+interface IUserRoom {
+  _id: string;
+  name: string;
+  email: string;
+}
+
 export interface IRoom {
   _id: string;
   code: number;
   name: string;
-  user_id: string;
+  user_id: IUserRoom;
   createdAt: Date;
   updatedAt: Date;
 }
