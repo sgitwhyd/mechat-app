@@ -1,21 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Image from "next/image";
-import socket from "@/config/socket/socket";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 
-type SendMessageProps = {
-  room_id: string;
-};
+import { useSendChat } from "@/services/chat.service";
+import { useAuthContext } from "@/store/context/AuthContext";
 
-export const SendMessage = ({ room_id }: SendMessageProps) => {
-  const handleSendMessage = (message: string) => {
-    socket.emit("store-chat", {
-      room_id: room_id as string,
-      text: message,
-    });
-  };
+export const SendMessage = () => {
+  const { state } = useAuthContext();
+  const { mutate: sendMessage, isLoading } = useSendChat();
+
   const schema = Yup.object({
     message: Yup.string().required("Message is required"),
   });
@@ -27,7 +22,7 @@ export const SendMessage = ({ room_id }: SendMessageProps) => {
       }}
       validationSchema={schema}
       onSubmit={({ message }, { resetForm }) => {
-        handleSendMessage(message);
+        sendMessage({ text: message, roomId: state.room?._id as string });
         resetForm();
       }}
     >
@@ -40,8 +35,10 @@ export const SendMessage = ({ room_id }: SendMessageProps) => {
                 alt="emot icon"
                 width={24}
                 height={24}
+                className=" w-6 h-6"
               />
               <Field
+                as="input"
                 name="message"
                 type="text"
                 placeholder="Write Here.."
@@ -52,14 +49,27 @@ export const SendMessage = ({ room_id }: SendMessageProps) => {
               <div className="text-xs text-red-500 mt-3">{errors.message}</div>
             )}
           </div>
-          <button type="submit" className="w-[100px] cursor-pointer">
+          <button
+            disabled={isLoading}
+            type="submit"
+            className="w-[100px] cursor-pointer"
+          >
             <div className="w-[60px] h-[60px] bg-brand-blue-500 rounded-full flex items-center justify-center">
-              <Image
-                src="/assets/icons/send-icons.svg"
-                alt="send icon"
-                width={24}
-                height={24}
-              />
+              {isLoading ? (
+                <div
+                  className="w-1 h-1  animate-spin rounded-full"
+                  style={{
+                    boxShadow: "10px 0 0 5px white, -10px 0 0 5px white",
+                  }}
+                ></div>
+              ) : (
+                <Image
+                  src="/assets/icons/send-icons.svg"
+                  alt="send chat icon"
+                  width={24}
+                  height={24}
+                />
+              )}
             </div>
           </button>
         </Form>
