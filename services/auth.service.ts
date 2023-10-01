@@ -1,64 +1,63 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { api } from "@/utils/api";
+import axiosInstance from "@/libs/axios";
 import { putToCookie, removeCookie } from "@/utils";
-import socket from "@/config/socket/socket";
+import { useMutation } from "@tanstack/react-query";
 
 export const getUser = async () => {
-  return api.get("/auth/profile");
+  return axiosInstance.get("/auth/profile");
 };
 
-export const signIn = async (values: { email: string; password: string }) => {
-  try {
-    const request = await api.post("/auth/login", {
-      email: values.email,
-      password: values.password,
-    });
-    const response = await request.data;
-    const token = response.token;
-    putToCookie("access_token", token);
+export const useSignIn = () => {
+  return useMutation({
+    mutationFn: async ({
+      email,
+      password,
+    }: {
+      email: string;
+      password: string;
+    }) => {
+      const response = await axiosInstance.post("/auth/login", {
+        email,
+        password,
+      });
 
-    return {
-      error: false,
-      message: "Login Successfully",
-    };
-  } catch (error: any) {
-    const { data } = error.response;
-    return {
-      error: true,
-      message: data.message,
-    };
-  }
+      return response.data;
+    },
+    onSuccess({ token }) {
+      putToCookie("access_token", token);
+    },
+    onError(err: any) {
+      throw err.response.data.message;
+    },
+  });
 };
 
-export const signUp = async (values: {
-  name: string;
-  email: string;
-  password: string;
-}) => {
-  try {
-    const request = await api.post("/auth/register", {
-      name: values.name,
-      email: values.email,
-      password: values.password,
-    });
-    const response = await request.data;
+export const useSignUp = () => {
+  return useMutation({
+    mutationFn: async ({
+      name,
+      email,
+      password,
+    }: {
+      name: string;
+      email: string;
+      password: string;
+    }) => {
+      const response = await axiosInstance.post("/auth/register", {
+        name,
+        email,
+        password,
+      });
 
-    return {
-      error: false,
-      message: response.message,
-    };
-  } catch (error: any) {
-    const { data } = error.response;
-    return {
-      error: true,
-      message: data.message,
-    };
-  }
+      return response.data;
+    },
+    onError(err: any) {
+      throw err.response.data.message;
+    },
+  });
 };
 
-export const signOut = (user: any) => {
-  socket.off();
-  socket.emit("disconnected", user.user_id);
+export const signOut = () => {
   removeCookie("access_token");
   window.location.reload();
   return {
