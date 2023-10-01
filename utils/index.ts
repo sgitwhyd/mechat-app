@@ -23,9 +23,21 @@ export const getCookies = (key: string) => {
   return cookies.get(key);
 };
 
-export const putToLocalStorage = (key: string, value: string) => {
+export const putToLocalStorage = (key: string, value: any) => {
   if (typeof window !== "undefined") {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, value);
+  }
+};
+
+export const getFromLocalStorage = (key: string): any => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem(key);
+  }
+};
+
+export const removeFromLocalStorage = (key: string) => {
+  if (typeof window !== "undefined") {
+    return localStorage.removeItem(key);
   }
 };
 
