@@ -3,7 +3,7 @@ const config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./feature/**/*.{js,ts,jsx,tsx}",
+    "./features/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -25,6 +25,19 @@ const config = {
       lineHeight: {
         "brand-xl": "1.375rem",
         "brand-2xl": "1.625rem",
+      },
+      keyframes: {
+        "scalling-dots": {
+          "0%, 100%": {
+            transform: "scale(0)",
+          },
+          "40%, 60%": {
+            transform: "scale(1)",
+          },
+        },
+      },
+      animation: {
+        "scalling-dots": "scalling-dots 1s infinite ease backwards",
       },
     },
   },
