@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createContext, useReducer } from "react";
-import { authReducer } from "../reducers/AuthReducer";
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { authReducer } from "@/store/reducers/AuthReducer";
 import { IAuthState, IAuthContext } from "@/types/auth-store";
 import { useQuery } from "@tanstack/react-query";
 import { getUser } from "@/services/auth.service";
-import { getCookies } from "@/utils";
+import { getCookies, getFromLocalStorage } from "@/utils";
+import { authAction } from "@/store/actions/AuthActions";
+import Loading from "@/features/loading";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -15,12 +17,16 @@ type AuthProviderProps = {
 const initalState: IAuthState = {
   isAuthenticated: false,
   user: null,
+  room: null,
+  isLoading: true,
 };
 
 export const AuthContext = createContext<IAuthContext>({
   state: {
     isAuthenticated: false,
     user: null,
+    room: null,
+    isLoading: true,
   },
   dispatch: () => {},
 });
@@ -30,38 +36,54 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const token = !!getCookies("access_token");
 
   if (token) {
-    const { data } = useQuery(
-      ["get-user"],
-      async () => {
-        return await getUser();
+    const { data } = useQuery({
+      queryKey: ["get_user_data"],
+      queryFn: async () => {
+        const response = await getUser();
+        return response.data;
       },
-      {
-        onSuccess: ({ data: result }) => {
+      onSuccess({ data: user }) {
+        dispatch({
+          type: authAction.SET_LOGIN,
+          payload: true,
+        });
+
+        const isJoinRoom = getFromLocalStorage("room");
+
+        if (isJoinRoom) {
           dispatch({
-            type: "SET_USER",
-            payload: {
-              user: {
-                name: result.data.name,
-                user_id: result.data._id,
-              },
+            type: authAction.JOIN_ROOM,
+            payload: JSON.parse(isJoinRoom),
+          });
+        }
+        dispatch({
+          type: authAction.SET_USER,
+          payload: {
+            user: {
+              name: user.name,
+              user_id: user._id,
             },
-          });
-          dispatch({
-            type: "SET_LOGIN",
-            payload: true,
-          });
-          dispatch({
-            type: "JOIN_ROOM",
-            payload: JSON.parse(localStorage.getItem("room") as string),
-          });
-        },
-        onError: (err) => {
-          console.log(err);
-        },
-        refetchOnMount: false,
-      }
-    );
+          },
+        });
+      },
+    });
   }
+
+  useEffect(() => {
+    if (state.user) {
+      dispatch({
+        type: authAction.SET_LOADING,
+        payload: false,
+      });
+    } else {
+      setTimeout(() => {
+        dispatch({
+          type: authAction.SET_LOADING,
+          payload: false,
+        });
+      }, 1000);
+    }
+  }, [state.user]);
 
   return (
     <AuthContext.Provider
@@ -70,7 +92,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         dispatch,
       }}
     >
-      {children}
+      {state.isLoading ? (
+        <div className="flex min-h-screen items-center justify-center">
+          <Loading />
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
+};
+
+export const useAuthContext = () => {
+  const { dispatch, state } = useContext(AuthContext);
+  return {
+    dispatch,
+    state,
+  };
 };

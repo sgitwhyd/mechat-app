@@ -1,28 +1,29 @@
 import React from "react";
 import Image from "next/image";
-import { useContext } from "react";
 import { useRouter } from "next/router";
 
-import socket from "@/config/socket/socket";
-import { AuthContext } from "@/store/context/AuthContext";
 import { IRoom } from "@/types/auth-store";
+import { putToLocalStorage } from "@/utils";
+import { authAction } from "@/store/actions/AuthActions";
+import { useAuthContext } from "@/store/context/AuthContext";
 
 type RoomCardProps = {
   room: IRoom;
 };
 
 export const RoomCard = ({ room }: RoomCardProps) => {
-  const { code, name, _id } = room;
+  const { code, name: room_name, user_id } = room;
+  const { name: user_name } = user_id;
   const Router = useRouter();
-  const {
-    state: { user },
-  } = useContext(AuthContext);
+
+  const { dispatch } = useAuthContext();
 
   const handleJoinRoom = () => {
-    Router.push(`/chats/${_id}`);
-    socket.emit("join", {
-      user_id: user?.user_id,
-      room_id: _id,
+    Router.push(`/chats`);
+    putToLocalStorage("room", JSON.stringify(room));
+    dispatch({
+      type: authAction.JOIN_ROOM,
+      payload: room,
     });
   };
 
@@ -36,7 +37,8 @@ export const RoomCard = ({ room }: RoomCardProps) => {
         priority
       />
       <div className="flex flex-col gap-5">
-        <h1 className="text-brand-xl leading-brand-xl">{name}</h1>
+        <h1 className="text-brand-xl leading-brand-xl">{room_name}</h1>
+        <p>Created By: {user_name}</p>
         <p className="text-base leading-4">
           Code <br /> {code}
         </p>

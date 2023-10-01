@@ -1,9 +1,9 @@
 import React from "react";
-import { messageProps } from "@/types/chat";
+import { IChat } from "@/types/chat";
 import { formatDate } from "@/utils";
 
 type ChatBoxProps = {
-  chat: messageProps;
+  chat: IChat;
   isSender: boolean;
 };
 

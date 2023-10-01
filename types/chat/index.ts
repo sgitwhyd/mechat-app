@@ -7,15 +7,14 @@ type User = {
   updatedAt: string;
 };
 
-export type messageProps = {
+export interface IChat {
   _id: string;
   roomId: string;
   text: string;
   user_id: User;
   createdAt: string;
   updatedAt: string;
-};
-
+}
 export interface IRoom {
   _id: string;
   name: string;

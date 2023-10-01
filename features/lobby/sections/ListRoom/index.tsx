@@ -1,17 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
-import socket from "@/config/socket/socket";
 import { IRoom } from "@/types/auth-store";
-import { RoomCard } from "@/feature/lobby";
+import { RoomCard } from "@/features/lobby/components";
+import pusher from "@/libs/pusher";
+import { useListRoom } from "@/services/room.service";
+import Loading from "@/features/loading";
 
 type ListRoomProps = {
   searchQuery: string;
 };
 
 export const ListRoom = ({ searchQuery }: ListRoomProps) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [rooms, setRooms] = useState<IRoom[]>([]);
 
   const filteredRooms = () => {
@@ -25,23 +25,28 @@ export const ListRoom = ({ searchQuery }: ListRoomProps) => {
   };
 
   useEffect(() => {
-    socket.on("room", (room: IRoom) => {
+    const channel = pusher.subscribe("rooms");
+    channel.bind("new_room", (room: IRoom) => {
       setRooms([...rooms, room]);
     });
+
+    return () => pusher.unsubscribe("rooms");
   }, [rooms]);
 
+  const { data, isLoading } = useListRoom();
+
   useEffect(() => {
-    socket.emit("get-room-data");
-    socket.on("room-data", (rooms: IRoom[]) => {
-      setRooms(rooms);
-      setIsLoading(false);
-    });
-  }, []);
+    if (!isLoading && data) {
+      setRooms(data);
+    }
+  }, [data, isLoading]);
 
   return (
     <div className="space-y-5">
       {isLoading ? (
-        <div>Loading</div>
+        <div className="flex justify-center items-center h-[calc(100vh-300px)]">
+          <Loading />
+        </div>
       ) : filteredRooms().length === 0 ? (
         <div className="text-center text-2xl">{searchQuery} not found</div>
       ) : (
