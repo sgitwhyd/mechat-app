@@ -87,7 +87,7 @@ const SignIn: NextPage = () => {
                   isLoading ? "cursor-not-allowed" : ""
                 }`}
               >
-                Sign In
+                {isLoading ? "Processing Login" : " Sign In"}
               </button>
             </Form>
           )}
