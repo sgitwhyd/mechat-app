@@ -12,7 +12,7 @@ type RoomCardProps = {
 };
 
 export const RoomCard = ({ room }: RoomCardProps) => {
-  const { code, name: room_name, user_id } = room;
+  const { name: room_name, user_id } = room;
   const { name: user_name } = user_id;
   const Router = useRouter();
 
@@ -28,20 +28,20 @@ export const RoomCard = ({ room }: RoomCardProps) => {
   };
 
   return (
-    <div className="bg-brand-gray-400 rounded-[10px] h-fit flex items-center relative">
-      <Image
-        src="/assets/icons/room.svg"
-        alt="room illustration"
-        width={250}
-        height={250}
-        priority
-      />
-      <div className="flex flex-col gap-5">
+    <div className="bg-brand-gray-400 rounded-[10px] h-fit flex flex-col sm:flex-row items-center relative p-4">
+      <div className="relative w-48 h-48 md:w-[250px] md:h-[250px]">
+        <Image
+          src="/assets/icons/room.svg"
+          alt="room illustration"
+          sizes="100vh"
+          fill
+          priority
+          className="object-contain"
+        />
+      </div>
+      <div className="flex flex-col gap-3">
         <h1 className="text-brand-xl leading-brand-xl">{room_name}</h1>
         <p>Created By: {user_name}</p>
-        <p className="text-base leading-4">
-          Code <br /> {code}
-        </p>
         <button
           className="bg-brand-blue-500 rounded-full text-base leading-4 py-2 px-[22px] max-w-[80px] text-white"
           onClick={handleJoinRoom}

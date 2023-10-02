@@ -30,7 +30,9 @@ const Layout = ({
         );
       }
       return (
-        <div className="flex w-full h-20 items-center justify-center relative">
+        <div
+          className={`flex w-full h-20 items-center justify-center relative`}
+        >
           {topBarElement}
         </div>
       );
@@ -38,7 +40,9 @@ const Layout = ({
   };
 
   return (
-    <div className="w-full sm:max-w-lg  mx-auto min-h-screen pb-10 flex items-center justify-between flex-col relative">
+    <div
+      className={`w-full sm:max-w-lg  mx-auto min-h-screen pb-10 flex items-center justify-between flex-col relative `}
+    >
       {renderTopBar()}
       {children}
     </div>

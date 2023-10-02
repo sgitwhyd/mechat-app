@@ -18,7 +18,16 @@ const Lobby: NextPage = () => {
   const { mutate: storeNewRoom } = useStoreRoom();
 
   return (
-    <Layout withTopBar topBarElement={<Navigation />}>
+    <Layout
+      withTopBar
+      topBarElement={
+        <div className="bg-white z-20 shadow-md h-[64px] w-full left-0 flex items-center justify-center fixed top-0">
+          <div className="max-w-lg mx-auto w-full">
+            <Navigation />
+          </div>
+        </div>
+      }
+    >
       <div className="flex-1 w-full px-[27px]">
         <Seo
           title="Lobby"
@@ -32,8 +41,8 @@ const Lobby: NextPage = () => {
         <ListRoom searchQuery={searchQuery} />
 
         {isAddRoom && (
-          <div className="fixed inset-0 z-10 flex justify-center bg-black bg-opacity-40  w-full min-h-screen  transition-all duration-300">
-            <div className="bg-white rounded-t-2xl z-20 h-fit fixed bottom-0 max-w-lg w-full mx-[27px] p-6 transition-all duration-300">
+          <div className="fixed inset-0 z-30 flex justify-center bg-black bg-opacity-40  w-full min-h-screen  transition-all duration-300">
+            <div className="bg-white rounded-t-2xl z-20 h-fit left-0 sm:left-auto fixed bottom-0 max-w-lg w-full mx-auto p-6 transition-all duration-300">
               <div className="flex justify-between items-center">
                 <h1 className="text-brand-xl font-bold">Create New Room</h1>
                 <div
