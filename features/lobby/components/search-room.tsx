@@ -13,8 +13,8 @@ export const SearchRoom = ({
   setSearchQuery,
 }: SearchRoomProps) => {
   return (
-    <div className="sticky top-0 z-10 bg-white pb-1  pt-[31px]">
-      <div className="relative flex items-center w-full py-[18px] bg-brand-gray-400 rounded-[10px] mb-3">
+    <div className="sticky top-14 z-10 pb-1 bg-white  pt-[31px]">
+      <div className="relative flex items-center w-full  py-[18px] bg-brand-gray-400 rounded-[10px] mb-3">
         <Image
           src="/assets/icons/magnifier.svg"
           alt="magnifier icon"
