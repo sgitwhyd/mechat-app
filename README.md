@@ -1,20 +1,32 @@
-# mechat-app
+# MeChat | Realtime Chat App
 
-🎉 Congratulations, your project was successfully generated with [Create Next Stack](https://www.create-next-stack.com/)!
+<div align='center'>
+  <a href="https://i.ibb.co/C9Vy9nQ/mobile-demo-mechat.gif" target="_blank">
+    <img src="https://i.ibb.co/C9Vy9nQ/mobile-demo-mechat.gif" width="250"/>
+  </a>
+</div>
 
-To get started, run:
 
-```bash
-yarn dev
+## How to use
+
+ 1. Create `.env` file with this configuration below... 
+ 2. For the backend you can clone [MeChat Server](https://github.com/sgitwhyd/mechat-server)
+
+   ```
+	NEXT_PUBLIC_BE_BASE_URL=
+	NEXT_PUBLIC_PUSHER_APIKEY=
+	NEXT_PUBLIC_PUSHER_CLUSTER=
+```
+3. Install dependencies
+
+```
+yarn install
 ```
 
-## Final Steps
+4. Run the app
 
-There are a few final steps that we were not able to perform automatically. We have provided a complete list for you below. You should take care of these before you can start developing your project. You can delete each item from the list as you go along.
+  ```yarn dev```
 
-### To do:
-
-- Integrate Vercel with your repository host for continuous deployments at https://vercel.com/new
 
 ## Scripts
 
