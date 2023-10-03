@@ -4,17 +4,17 @@
 <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzZtcmxvZmtzbjEzNzBmcjRndWFjdjN3MWppbHIycTh6a3l1czlpayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WjjoZKa2TAo1mTGiXQ/giphy.gif" width="300"/>
 </div>
 
-
 ## How to use
 
- 1. Create `.env` file with this configuration below... 
- 2. For the backend you can clone [MeChat Server](https://github.com/sgitwhyd/mechat-server)
+1.  Create `.env` file with this configuration below...
+2.  For the backend you can clone [MeChat Server](https://github.com/sgitwhyd/mechat-server)
 
-   ```
+```
 	NEXT_PUBLIC_BE_BASE_URL=
 	NEXT_PUBLIC_PUSHER_APIKEY=
 	NEXT_PUBLIC_PUSHER_CLUSTER=
 ```
+
 3. Install dependencies
 
 ```
@@ -23,8 +23,7 @@ yarn install
 
 4. Run the app
 
-  ```yarn dev```
-
+`yarn dev`
 
 ## Scripts
 
