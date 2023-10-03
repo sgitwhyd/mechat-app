@@ -1,9 +1,7 @@
 # MeChat | Realtime Chat App
 
 <div align='center'>
-  <a href="https://i.ibb.co/C9Vy9nQ/mobile-demo-mechat.gif" target="_blank">
-    <img src="https://i.ibb.co/C9Vy9nQ/mobile-demo-mechat.gif" width="250"/>
-  </a>
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzZtcmxvZmtzbjEzNzBmcjRndWFjdjN3MWppbHIycTh6a3l1czlpayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WjjoZKa2TAo1mTGiXQ/giphy.gif" width="300"/>
 </div>
 
 
