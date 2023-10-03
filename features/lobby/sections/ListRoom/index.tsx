@@ -5,7 +5,7 @@ import { IRoom } from "@/types/auth-store";
 import { RoomCard } from "@/features/lobby/components";
 import pusher from "@/libs/pusher";
 import { useListRoom } from "@/services/room.service";
-import Loading from "@/features/loading";
+import Loading from "@/components/loading";
 
 type ListRoomProps = {
   searchQuery: string;

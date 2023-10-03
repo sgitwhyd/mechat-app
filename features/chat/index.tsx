@@ -9,7 +9,6 @@ import { ChatList } from "@/features/chat/sections/ChatList";
 import { SendMessage } from "@/features/chat/components";
 import { removeFromLocalStorage } from "@/utils";
 import { authAction } from "@/store/actions/AuthActions";
-import Seo from "@/components/seo";
 
 const Chats = () => {
   const router = useRouter();
@@ -25,6 +24,10 @@ const Chats = () => {
 
   return (
     <Layout
+      seoProps={{
+        title: state.room?.name as string,
+        description: `this page showing all chat in room ${state.room?.name} created by ${state.room?.user_id.name}`,
+      }}
       withTopBar
       title={
         <div className="fixed top-0 bg-white z-10 shadow-md h-[64px] w-full left-0 flex items-center justify-center">
@@ -51,10 +54,6 @@ const Chats = () => {
         </div>
       }
     >
-      <Seo
-        title={state.room?.name as string}
-        description={`this page showing all chat in room ${state.room?.name} created by ${state.room?.user_id.name}`}
-      />
       <div className="flex-1 w-full relative px-[27px]">
         <ChatList />
         <SendMessage />
