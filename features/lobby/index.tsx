@@ -82,7 +82,7 @@ const Lobby: NextPage = () => {
                         error={errors.room_name}
                       />
                       <button
-                        type="button"
+                        type="submit"
                         className="bg-brand-blue-500 w-full rounded-[10px] font-semibold text-brand-xl text-white py-3"
                       >
                         Create

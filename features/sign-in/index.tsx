@@ -2,9 +2,8 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
-import { useEffect, useContext, useState } from "react";
+import { useState } from "react";
 
-import { AuthContext } from "@/store/context/AuthContext";
 import Layout from "@/components/layout";
 import { signInValidationSchema } from "@/validator/auth";
 import Input from "@/components/ui/input";
@@ -14,14 +13,7 @@ import Seo from "@/components/seo";
 
 const SignIn: NextPage = () => {
   const router = useRouter();
-  const { state } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (state.isAuthenticated) {
-      router.push("/");
-    }
-  }, [router, state.isAuthenticated]);
 
   const { mutateAsync: signIn } = useSignIn();
 
