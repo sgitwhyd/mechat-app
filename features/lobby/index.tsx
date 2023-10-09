@@ -9,7 +9,6 @@ import Input from "@/components/ui/input";
 import { Navigation, SearchRoom } from "@/features/lobby/components";
 import { ListRoom } from "@/features/lobby/sections/ListRoom";
 import { useStoreRoom } from "@/services/room.service";
-import Seo from "@/components/seo";
 
 const Lobby: NextPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -19,6 +18,7 @@ const Lobby: NextPage = () => {
 
   return (
     <Layout
+      seoProps={{ title: "Lobby", description: "This is an lobby page" }}
       withTopBar
       topBarElement={
         <div className="bg-white z-20 shadow-md h-[64px] w-full left-0 flex items-center justify-center fixed top-0">
@@ -29,11 +29,6 @@ const Lobby: NextPage = () => {
       }
     >
       <div className="flex-1 w-full px-[27px]">
-        <Seo
-          title="Lobby"
-          description="This Page Showing all available room in this app"
-        />
-
         <SearchRoom
           setIsAddRoom={setIsAddRoom}
           setSearchQuery={setSearchQuery}

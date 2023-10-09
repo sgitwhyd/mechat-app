@@ -6,7 +6,7 @@ import { IChat } from "@/types/chat";
 import { ChatBox } from "@/features/chat/components";
 import useAllChatQuery from "@/features/chat/hooks/useAllChatQuery";
 import { useAuthContext } from "@/store/context/AuthContext";
-import Loading from "@/features/loading";
+import Loading from "@/components/loading";
 
 export const ChatList = () => {
   const { state } = useAuthContext();

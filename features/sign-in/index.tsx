@@ -9,7 +9,6 @@ import { signInValidationSchema } from "@/validator/auth";
 import Input from "@/components/ui/input";
 import { useSignIn } from "@/services/auth.service";
 import { AuthSignInProps } from "@/types/auth-store";
-import Seo from "@/components/seo";
 
 const SignIn: NextPage = () => {
   const router = useRouter();
@@ -36,11 +35,14 @@ const SignIn: NextPage = () => {
   };
 
   return (
-    <Layout withTopBar title="Welcome">
-      <Seo
-        title="Sign In"
-        description="This is a Sign in Page on this application"
-      />
+    <Layout
+      seoProps={{
+        title: "Sign In",
+        description: "This is a Sign in Page on this application",
+      }}
+      withTopBar
+      title="Welcome"
+    >
       <div className="flex-1 w-full px-[27px]">
         <h3 className="text-brand-2xl leading-brand-2xl font-bold">Sign In</h3>
         <p className="text-lg leading-[18px mt-[25px]">

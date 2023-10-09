@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import TopBarNavigation from "../navigation/TopBarNavigation";
+import { NextSeo, NextSeoProps } from "next-seo";
 
 type LayoutProps = {
   children: ReactNode;
@@ -8,6 +9,7 @@ type LayoutProps = {
   title?: ReactNode | string;
   icon?: ReactNode;
   customClass?: string;
+  seoProps: NextSeoProps;
 };
 
 const Layout = ({
@@ -17,6 +19,7 @@ const Layout = ({
   title,
   icon,
   customClass,
+  seoProps,
 }: LayoutProps) => {
   const renderTopBar = () => {
     if (withTopBar) {
@@ -43,6 +46,7 @@ const Layout = ({
     <div
       className={`w-full sm:max-w-lg  mx-auto min-h-screen pb-10 flex items-center justify-between flex-col relative `}
     >
+      <NextSeo {...seoProps} key="next-seo" />
       {renderTopBar()}
       {children}
     </div>

@@ -8,7 +8,6 @@ import Input from "@/components/ui/input";
 import { signUpValidationSchema } from "@/validator/auth";
 import { AuthSignUpProps } from "@/types/auth-store";
 import { useSignUp } from "@/services/auth.service";
-import Seo from "@/components/seo";
 
 const SignUp: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,11 +27,14 @@ const SignUp: NextPage = () => {
   };
 
   return (
-    <Layout withTopBar title="Create New Account">
-      <Seo
-        title="Sign Up"
-        description="This is a Sign in Page on this application"
-      />
+    <Layout
+      seoProps={{
+        title: "Sign Up",
+        description: "This is a Sign in Page on this application",
+      }}
+      withTopBar
+      title="Create New Account"
+    >
       <div className="flex-1 w-full px-[27px]">
         <Formik
           initialValues={{
